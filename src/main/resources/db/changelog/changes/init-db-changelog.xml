@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="init_tables" author="BHE">
+        <createTable tableName="account">
+            <column name="id" autoIncrement="true" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="number" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="balance" type="number"/>
+            <column name="id_customer" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="customer">
+            <column name="id" autoIncrement="true" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="code" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="transaction">
+            <column name="id" autoIncrement="true" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="time" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="number">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_account" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet  author="BHE"  id="insert-sql-file">
+        <sqlFile  encoding="UTF-8"
+                  path="/db/changelog/script/init-db.sql"/>
+    </changeSet>
+</databaseChangeLog>
