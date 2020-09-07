@@ -1,10 +1,13 @@
 package fr.ing.interview;
 
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class KataApplicationTests {
+@RunWith(MockitoJUnitRunner.class)
+public class KataApplicationTests {
 
 	@Test
 	void contextLoads() {
