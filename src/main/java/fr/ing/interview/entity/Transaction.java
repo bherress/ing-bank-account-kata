@@ -2,6 +2,7 @@ package fr.ing.interview.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @Table(name="transaction")
 public class Transaction {
 
@@ -29,6 +31,7 @@ public class Transaction {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_account", nullable = false)
+    @JsonIgnore
     private Account account;
 
     public Transaction(TransactionTypeEnum type, Account account, BigDecimal amount){

@@ -31,6 +31,5 @@ public class Account {
     private Customer customer;
 
     @OneToMany(mappedBy = "account")
-    @JsonIgnore
     private List<Transaction> transactionList;
 }

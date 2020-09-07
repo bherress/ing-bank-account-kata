@@ -15,7 +15,7 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
 
-    @GetMapping("/all/{customerName}/{accountNumber}")
+    @GetMapping("/all/{customerCode}/{accountNumber}")
     public List<Transaction> getAccountBalance(@PathVariable("customerCode") @NotNull String customerCode,
                                                @PathVariable("accountNumber") @NotNull String accountNumber) {
         return transactionService.getAccountTransactionsHistory(customerCode, accountNumber);
