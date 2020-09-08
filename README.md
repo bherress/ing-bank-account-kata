@@ -1,3 +1,4 @@
+
 # Bank Account Kata (EN)
 _Une version [française est disponible](#bank-account-kata-fr)_
 > This is a home exercice, with some implementation freedom and a due date, its goal is to give a starting point for the upcoming technical interview.  
@@ -8,7 +9,7 @@ and some [bonus features](#bonus-features), so you can use the time left to shin
 In case of missing information, make a choice and stay consistent with it.    
 _Be careful with the size and the message of your commits._
 
-**There is no "good" way to make this Kata, we're interested in your implementation choices and your technical skills with those constraints.**
+**There is no "" way togood make this Kata, we're interested in your implementation choices and your technical skills with those constraints.**
 
 ### Delivery
 The Kata should be delivered using a [Github](https://github.com) repository, or you can create a *Pull Request* to the [develop](https://github.com/kirinux/ing-bank-account-kata/tree/develop) branch of the [original repository](https://github.com/kirinux/ing-bank-account-kata).  
