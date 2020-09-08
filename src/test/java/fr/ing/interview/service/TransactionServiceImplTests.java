@@ -1,25 +1,24 @@
 package fr.ing.interview.service;
 
-import fr.ing.interview.KataApplicationTests;
 import fr.ing.interview.entity.Account;
 import fr.ing.interview.entity.Transaction;
 import fr.ing.interview.entity.TransactionTypeEnum;
-import fr.ing.interview.exception.UnauthorizedOperationException;
-import fr.ing.interview.repository.AccountRepository;
 import fr.ing.interview.repository.TransactionRepository;
-import fr.ing.interview.service.impl.AccountServiceImpl;
 import fr.ing.interview.service.impl.TransactionServiceImpl;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
-public class TransactionServiceImplTest extends KataApplicationTests {
+@RunWith(MockitoJUnitRunner.class)
+public class TransactionServiceImplTests {
     @InjectMocks
     TransactionServiceImpl transactionService;
 
@@ -32,13 +31,13 @@ public class TransactionServiceImplTest extends KataApplicationTests {
         String accountNumber = "0000";
 
         List<Transaction> results = transactionService.getAccountTransactionsHistory(customerName, accountNumber);
-        Assert.assertNull(results);
+        Assert.assertNotNull(results);
     }
 
     @Test
     public void getAccountTransactionsHistoryOkTest() {
-        String customerCode = "1";
-        String accountNumber = "0000";
+        String customerId = "000000001";
+        String accountId = "0000000001";
 
         Account account = new Account();
 
@@ -46,10 +45,10 @@ public class TransactionServiceImplTest extends KataApplicationTests {
         Transaction withdrawTransaction = new Transaction(TransactionTypeEnum.WITHDRAM, account, BigDecimal.ONE);
         List<Transaction> transactions = Arrays.asList(depositTransaction, withdrawTransaction);
 
-        Mockito.when(transactionRepository.findByAccountNumberAndAccountCustomerCodeOrderByTimeDesc(accountNumber, customerCode))
+        Mockito.when(transactionRepository.findByAccountIdAndAccountCustomerIdOrderByTimeDesc(accountId, customerId))
             .thenReturn(transactions);
 
-        List<Transaction> results = transactionService.getAccountTransactionsHistory(customerCode, accountNumber);
+        List<Transaction> results = transactionService.getAccountTransactionsHistory(customerId, accountId);
 
         Assert.assertEquals(2, results.size());
     }

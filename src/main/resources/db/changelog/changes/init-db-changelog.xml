@@ -5,25 +5,19 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
     <changeSet id="init_tables" author="BHE">
         <createTable tableName="account">
-            <column name="id" autoIncrement="true" type="BIGINT">
+            <column name="id" type="varchar(10)">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="number" type="varchar">
-                <constraints nullable="false"/>
-            </column>
             <column name="balance" type="number"/>
-            <column name="id_customer" type="bigint">
+            <column name="id_customer" type="varchar(10)">
                 <constraints nullable="false"/>
             </column>
         </createTable>
         <createTable tableName="customer">
-            <column name="id" autoIncrement="true" type="BIGINT">
+            <column name="id" type="varchar(10)">
                 <constraints primaryKey="true"/>
             </column>
             <column name="name" type="varchar">
-                <constraints nullable="false"/>
-            </column>
-            <column name="code" type="varchar">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -40,7 +34,7 @@
             <column name="amount" type="number">
                 <constraints nullable="false"/>
             </column>
-            <column name="id_account" type="bigint">
+            <column name="id_account" type="varchar(10)">
                 <constraints nullable="false"/>
             </column>
         </createTable>

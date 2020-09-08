@@ -18,8 +18,8 @@ public class TransactionServiceImpl implements TransactionService {
     private TransactionRepository transactionRepository;
 
     @Override
-    public List<Transaction> getAccountTransactionsHistory(String customerCode, String accountNumber) {
-        return transactionRepository.findByAccountNumberAndAccountCustomerCodeOrderByTimeDesc(accountNumber, customerCode);
+    public List<Transaction> getAccountTransactionsHistory(String customerId, String accountId) {
+        return transactionRepository.findByAccountIdAndAccountCustomerIdOrderByTimeDesc(accountId, customerId);
     }
 
     @Override

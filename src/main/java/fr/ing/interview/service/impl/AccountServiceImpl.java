@@ -7,9 +7,9 @@ import fr.ing.interview.exception.UnauthorizedOperationException;
 import fr.ing.interview.repository.AccountRepository;
 import fr.ing.interview.service.AccountService;
 import fr.ing.interview.service.TransactionService;
-import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
@@ -25,25 +25,28 @@ public class AccountServiceImpl implements AccountService {
     private static final BigDecimal MINIMAL_DEPOSIT_AMOUT = new BigDecimal("0.01");
 
     @Override
-    public Account transactionAccount(String customerCode, TransactionTypeEnum transactionTypeEnum, String accountNumber, BigDecimal amount) throws UnauthorizedOperationException{
-        Account account = accountRepository.findByNumberAndCustomerCode(accountNumber, customerCode);
-        if(account == null){
-            throw new UnauthorizedOperationException(ErrorTypeEnum.ACCOUNT_CUSTOMER_NOT_FOUND);
-        }
+    @Transactional
+    public Account transactionAccount(String customerId, TransactionTypeEnum transactionTypeEnum, String accountId, BigDecimal amount){
+        Account account = getAccountByCustomerIdAndAccountId(customerId, accountId);
         return TransactionTypeEnum.DEPOSIT.equals(transactionTypeEnum) ?
                 depositAccount(account, amount) : withDrawAccount(account, amount);
     }
 
     @Override
-    public BigDecimal getAccountBalance(String customerCode, String accountNumber) throws UnauthorizedOperationException {
-        Account account = accountRepository.findByNumberAndCustomerCode(accountNumber, customerCode);
+    public BigDecimal getAccountBalance(String customerId, String accountId){
+        return getAccountByCustomerIdAndAccountId(customerId, accountId).getBalance();
+    }
+
+    private Account getAccountByCustomerIdAndAccountId(String customerId, String accountId) {
+        Account account = accountRepository.findByIdAndCustomerId(accountId, customerId);
         if(account == null){
             throw new UnauthorizedOperationException(ErrorTypeEnum.ACCOUNT_CUSTOMER_NOT_FOUND);
         }
-        return account.getBalance();
+
+        return account;
     }
 
-    private Account depositAccount(Account account, BigDecimal amount) throws UnauthorizedOperationException{
+    private Account depositAccount(Account account, BigDecimal amount){
         if(MINIMAL_DEPOSIT_AMOUT.compareTo(amount) >= 0) {
             throw new UnauthorizedOperationException(ErrorTypeEnum.NOT_VALID_AMOUNT);
         }
@@ -53,7 +56,7 @@ public class AccountServiceImpl implements AccountService {
         return accountRepository.save(account);
     }
 
-    private Account withDrawAccount(Account account, BigDecimal amount) throws  UnauthorizedOperationException{
+    private Account withDrawAccount(Account account, BigDecimal amount){
         BigDecimal newBalance = account.getBalance().subtract(amount);
         if(BigDecimal.ZERO.compareTo(newBalance) > 0) {
             throw new UnauthorizedOperationException(ErrorTypeEnum.NEGATIVE_BALANCE);
